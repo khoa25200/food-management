@@ -1,8 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import AdminPage from './apps/admin/AdminPage';
 import StaffPage from './apps/staff/StaffPage';
-import UserPage from './apps/user/UserPage';
 import './App.css'
+import MenuPage from './pages/menu-page';
+import { ROUTE } from 'consts/route.const';
 
 function App() {
   return (
@@ -10,11 +11,15 @@ function App() {
       <Routes>
         <Route path="/admin/*" element={<AdminPage />} />
         <Route path="/staff/*" element={<StaffPage />} />
-        <Route path="/" element={<UserPage />} />
+
+        {/* Use case: for all roles */}
+        <Route path="/" element={<MenuPage />} />
+        <Route path={ROUTE.MENU} element={<MenuPage />} />
+
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   )
 }
 
-export default App
+export default App;
