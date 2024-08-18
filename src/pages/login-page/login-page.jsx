@@ -1,11 +1,10 @@
 import React from 'react';
 import './login-page.less';
+import LayoutAuth from '~/layouts/LayoutAuth';
+import FormLogin from '~/components/forms/FormLogin';
 function LoginPage({ role }) {
   return (
-    <div>
-      <h1>login page Page</h1>
-      {role}
-    </div>
+    <LayoutAuth role={role} content={<FormLogin role={role}/>} />
   );
 }
 
