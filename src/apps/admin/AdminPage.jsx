@@ -6,10 +6,12 @@ import RegisterPage from 'pages/register-page';
 import { ROLE } from 'consts/role.const';
 import { ROUTE } from '~/configs/consts/route.const';
 import MenuPage from '~/pages/menu-page';
+import ForgotPasswordPage from '~/pages/forgot-password';
 
 const adminRoutes = [
   { path: `/${ROUTE.LOGIN}`, element: <LoginPage role={ROLE.ADMIN} /> },
   { path: `/${ROUTE.REGISTER}`, element: <RegisterPage role={ROLE.ADMIN} /> },
+  { path: `/${ROUTE.FORGOT_PASSWORD}`, element: <ForgotPasswordPage role={ROLE.ADMIN} /> },
   { path: `/${ROUTE.MENU}`, element: <MenuPage role={ROLE.ADMIN} /> },
 
 
