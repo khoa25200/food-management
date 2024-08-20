@@ -1,8 +1,17 @@
 import React from 'react';
 import './SectionBanner.less';
 import CarousalBasic from '~/components/carousals/CarousalBasic';
+import SectionBannerItem from './SectionBannerItem';
+import { IMAGES } from '~/assets/images';
+const items = [
+  <SectionBannerItem cateImg={IMAGES.cateBanner1}/>,
+  <SectionBannerItem cateImg={IMAGES.cateBanner1}/>,
+  <SectionBannerItem cateImg={IMAGES.cateBanner1}/>,
+  <SectionBannerItem cateImg={IMAGES.cateBanner1}/>,
+  <SectionBannerItem cateImg={IMAGES.cateBanner1}/>,
+];
+
 function SectionBanner() {
-  const items = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6'];
 
   return (
     <section>

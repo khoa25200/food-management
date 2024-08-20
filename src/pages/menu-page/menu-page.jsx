@@ -4,7 +4,7 @@ import { ROLE } from 'consts/role.const';
 import LayoutMenu from '~/layouts/LayoutMenu';
 function MenuPage({ role = ROLE.USER }) {
   return (
-    <LayoutMenu role={role} className='menu-layout'/>
+    <LayoutMenu role={role}/>
   );
 }
 

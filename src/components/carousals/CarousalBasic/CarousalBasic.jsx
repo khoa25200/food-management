@@ -25,7 +25,21 @@ function CarousalBasic({ itemsList = [], settings }) {
     loop: true,
     pauseOnHover: true,
     slidesToShow: DEFAULT_SLIDES_TO_SHOW,
-    slidesToScroll: DEFAULT_SLIDES_TO_SCROLL
+    slidesToScroll: DEFAULT_SLIDES_TO_SCROLL,
+    responsive: [
+      {
+        breakpoint: 1000,
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+        }
+      }
+    ]
   };
   const settingOverride = settings ? {...settingsD, ...settings} : {...settingsD};
   

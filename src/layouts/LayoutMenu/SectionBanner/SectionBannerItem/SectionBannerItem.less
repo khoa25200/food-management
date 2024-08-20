@@ -1,0 +1,23 @@
+.category-banner-item {
+  margin-left: 8px;
+  margin-right: 8px;
+  border-radius: var(--Spacing-space-300, 12px);
+  background-color: #d3d3d3;
+  overflow: hidden;
+  pointer-events: none;
+
+  .image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 428 / 225;
+    img {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      inset: 0px;
+      color: transparent;
+      object-fit: cover;
+      display: block;
+    }
+  }
+}
