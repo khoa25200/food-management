@@ -5,8 +5,7 @@ const { Header } = Layout;
 function LayoutHeader({ role }) {
   return (
     <Header>
-      {/* --Role: {role}--
-      TODO(G): Add header here */}
+      --Role: {role}--
     </Header>
   );
 }
