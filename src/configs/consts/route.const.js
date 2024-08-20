@@ -8,4 +8,7 @@ export const ROUTE = {
 
   /**Admin, Staff, User */
   MENU: "menu",
+  USER_MANAGEMENT: "user-management",
+  FOOD_MANAGEMENT: "food-management",
+  TABLE_MANAGEMENT: "table-management",
 };
