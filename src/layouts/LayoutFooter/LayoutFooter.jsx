@@ -4,8 +4,7 @@ import { Layout } from 'antd';
 const { Footer } = Layout;
 function LayoutFooter({ role }) {
   return (
-    <Footer> 
-      <footer className="footer">
+    <Footer className="footer"> 
       <div className="footer-content">
         <p>
         &copy; 2024 Food Management All rights reserved | Term & Privacy | Hotline 24/7: 1900 4515
@@ -27,9 +26,6 @@ function LayoutFooter({ role }) {
 
         </div>
       </div>
-    </footer>
-
-
     </Footer>
   );
 }

@@ -1,0 +1,3 @@
+export const DEFAULT_SLIDES_TO_SHOW = 3;
+export const DEFAULT_SLIDES_TO_SCROLL = 3;
+export const DEFAULT_SLIDES_TO_SPEED = 500;

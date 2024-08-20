@@ -1,11 +1,8 @@
 // TODO: Remove eslint-disable
-
-/* eslint-disable */
-import { DELETE_METHOD, GET_METHOD } from '../config/api.constants'
-import { CustomPopup } from '../layout/modules/CustomPopup'
+import { GET_METHOD } from '~/configs/consts/api.const'
 // import { config } from './../config'
 import { buildParams } from './Helper'
-import usePortal from './usePortal'
+
 import ReactDOM from 'react-dom'
 // import { getToken } from '../layout/pages/ShoppingCartPage/helpers'
 
@@ -54,37 +51,7 @@ export const httpMethodsType = {
   delete: async (path, config) => await Promise.resolve(),
 }
 
-const showPopupError = ({ status, response }) => {
-  usePortal('content-popup')
-  const popup = document.querySelector(`#content-popup`)
-  const handleClosePopUp = () => {
-    popup.remove()
-  }
-  ReactDOM.render(
-    CustomPopup.fail(
-      'Something went wrong',
-      response.statusText || status,
-      handleClosePopUp,
-    ),
-    popup,
-  )
-}
 
-const showPopupAuthorizedError = ({ status, response }) => {
-  usePortal('content-popup')
-  const popup = document.querySelector(`#content-popup`)
-  const handleClosePopUp = () => {
-    popup.remove()
-  }
-  ReactDOM.render(
-    CustomPopup.failAuthorized(
-      'User Session Expired',
-      response.statusText || status,
-      handleClosePopUp,
-    ),
-    popup,
-  )
-}
 
 // /**
 //  * @type {httpMethodsType}
@@ -114,6 +81,9 @@ const api = async ({
   if (method === GET_METHOD) {
     delete opts.body
   }
+  console.log({
+    url
+  })
 
   const response = await fetch(`${url}?${buildParams(params)}`, opts).then(
     response => {
@@ -124,28 +94,28 @@ const api = async ({
       } else {
         if (response.status === 500) {
           // show pop up error
-          showPopupError({
-            response,
-            status:
-              'Sorry, the website is currently experiencing system problems',
-          })
+          // showPopupError({
+          //   response,
+          //   status:
+          //     'Sorry, the website is currently experiencing system problems',
+          // })
         }
         if (response.status === 401) {
           const checkURL = new URL(url)
           const arr = checkURL.pathname.split('/')
           const keyCheck = arr[arr.length - 1]
           console.log(checkURL)
-          if (keyCheck === 'AddToWishlist') {
-            const parent = document.querySelector('.user__auth[popup]')
-            parent
-              .querySelector(`[data-user="wishlistUnlogin"]`)
-              .classList.add('active')
-          } else {
-            showPopupAuthorizedError({
-              response,
-              status: 'You have been logged out, please login again',
-            })
-          }
+          // if (keyCheck === 'AddToWishlist') {
+          //   const parent = document.querySelector('.user__auth[popup]')
+          //   parent
+          //     .querySelector(`[data-user="wishlistUnlogin"]`)
+          //     .classList.add('active')
+          // } else {
+          //   showPopupAuthorizedError({
+          //     response,
+          //     status: 'You have been logged out, please login again',
+          //   })
+          // }
         }
 
         return response.json().then(result => {
