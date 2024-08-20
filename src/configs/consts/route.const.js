@@ -1,12 +1,11 @@
 export const ROUTE = {
-   /**Admin */
+  /**Admin */
 
+  /**Admin, Staff */
+  LOGIN: "login",
+  REGISTER: "register",
+  FORGOT_PASSWORD: "forgot-password",
 
-   /**Admin, Staff */
-   LOGIN: 'login',
-   REGISTER: 'register',
-
-
-   /**Admin, Staff, User */
-   MENU: 'menu'
+  /**Admin, Staff, User */
+  MENU: "menu",
 };
