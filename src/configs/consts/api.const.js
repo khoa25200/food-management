@@ -1,7 +1,11 @@
-const baseUrl = 'https://truthful-tenderness-production.up.railway.app/api/v1/auth';
+const baseUrlENV = import.meta.env.BASE_URL;
+
+const baseUrl = (!baseUrlENV || baseUrlENV == '/') ? 'https://truthful-tenderness-production.up.railway.app' : baseUrlENV;
+
+const DEFAULT_BASE_URL = baseUrl + `/api/v1/auth`;
 
 export const API = {
-  GET_ALL_DISHES: `${baseUrl}/dishes`
+  GET_ALL_DISHES: `${DEFAULT_BASE_URL}/dishes`
 }
 
 export const GET_METHOD = 'GET'

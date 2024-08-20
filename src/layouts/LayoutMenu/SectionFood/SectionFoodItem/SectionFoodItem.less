@@ -1,0 +1,101 @@
+.category-food-item {
+  padding: 0 5px;
+
+  article {
+    position: relative;
+    cursor: pointer;
+    margin: 0;
+
+    .tag {
+      position: absolute;
+      z-index: 1;
+      left: 12px;
+      top: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+
+      &>div {
+        padding: 8px 12px 8px 8px;
+        gap: 6px;
+        --font-weight: 600;
+        background: var(--Primary-500, #ff881d);
+        color: #fff;
+
+        div {
+          color: inherit;
+          font-size: 1.2rem;
+          font-weight: var(--font-weight);
+          line-height: 121.429%;
+        }
+      }
+    }
+
+    .image {
+      position: relative;
+      height: 140px;
+      width: 100%;
+      background-color: #fff6ec;
+      border-radius: var(--Spacing-space-150, 6px);
+
+      img {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        inset: 0px;
+        color: transparent;
+        object-fit: cover;
+        border-radius: inherit;
+      }
+    }
+
+    .main {
+      display: flex;
+      padding: 10px 2px;
+      align-items: center;
+
+      * {
+        margin: 0 2px;
+      }
+
+      h3 {
+        color: var(--Shades-B, #000);
+        font-style: normal;
+        font-weight: 600;
+        line-height: 135.75%;
+        display: -webkit-box;
+        -webkit-line-clamp: var(--line-clamp, 1);
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        word-break: break-word;
+        font-size: 1rem;
+      }
+
+      p {
+        margin: 2px 0;
+        color: var(--Neutrals-600, #707c86);
+        font-size: .9rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 116.667%;
+        min-height: 14px;
+        display: -webkit-box;
+        -webkit-line-clamp: var(--line-clamp, 1);
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        word-break: break-word;
+      }
+
+      div {
+        padding: var(--Spacing-space-100, 4px) 0;
+        align-items: center;
+        font-size: 1rem;
+
+        span {
+          color: var(--Primary-700, #8e4300);
+        }
+      }
+    }
+  }
+}
