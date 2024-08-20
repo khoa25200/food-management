@@ -1,4 +1,4 @@
-const baseUrlENV = import.meta.env.BASE_URL;
+const baseUrlENV = import.meta.env.VITE_BASE_URL;
 
 const baseUrl = (!baseUrlENV || baseUrlENV == '/') ? 'https://truthful-tenderness-production.up.railway.app' : baseUrlENV;
 
