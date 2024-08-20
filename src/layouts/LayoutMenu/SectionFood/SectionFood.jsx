@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './SectionFood.less';
-import { Divider, Pagination, Radio, Select, Space } from 'antd';
+import { Col, Divider, Pagination, Radio, Row, Select, Space } from 'antd';
 import api from '~/utils/HttpRequest';
 import { API, GET_METHOD } from '~/configs/consts/api.const';
+import { DEFAULT_PAGE_SIZE } from '~/configs/consts/app.const';
+import SectionFoodItem from './SectionFoodItem';
+import { IMAGES } from '~/assets/images';
 const filterSortData = [
   {
     id: 0,
@@ -41,7 +44,7 @@ const getAllDishes = async (page, size, sortBy = 'id', sortDirection = 'asc') =>
       },
       method: GET_METHOD,
     })
-    console.log(dishes?.data)
+    return dishes;
   }
   catch (error) {
     console.error('Error fetching dishes', error);
@@ -50,8 +53,8 @@ const getAllDishes = async (page, size, sortBy = 'id', sortDirection = 'asc') =>
 }
 
 function SectionFood() {
-  const [dishes, setDishes] = useState({})
-
+  const [dishes, setDishes] = useState([]);
+  const [isLoading, setLoading] = useState(false);
 
   const [filterSort, setFilterSort] = useState(filterSortData[0]);
   const handleFilterSortChange = (value) => {
@@ -60,20 +63,29 @@ function SectionFood() {
 
   const [category, setCategory] = useState(categories[0]);
   const onChange = (e) => {
-    console.log('radio checked', e.target.value);
     setCategory(setCategory(categories[e.target.value]));
   };
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
+  const [paginationC, setPaginationC] = useState(10);
+  const [paginationNumber, setPaginationNumber] = useState(1);
 
-  const handleDisplayDishes = async () => {
-    const page = 1;
-    const size = 10;
-    const dishes = await getAllDishes(page, size, 'id', filterSort.id === 1 ? 'asc' : 'desc');
-    setDishes(dishes);
+  const handleApiGetDishesReq = async () => {
+    setLoading(true);
+    const dishes = await getAllDishes(page, DEFAULT_PAGE_SIZE, 'id', filterSort.id === 1 ? 'asc' : 'desc');
+    if (!dishes || !dishes.content) return;
+    setLoading(false);
+    setDishes(dishes.content);
+    setPaginationC(+(dishes?.totalPages)*10);
+    setPaginationNumber(dishes?.pageable?.pageNumber)
   }
+  useEffect(() => {
+    handleApiGetDishesReq();
+  }, [page]);
 
-  useEffect(() => handleDisplayDishes, [filterSort, page, category]);
+  const handlePageChange = (e) => {
+    setPage(e - 1);
+  };
 
   return (
     <section>
@@ -102,18 +114,36 @@ function SectionFood() {
           </div>
         </div>
         <div className='display-food'>
-          <div className='foods-section'>
-            {/* Render food items here */}
-            <div className='food-item'>
-              <div className='food-info'>
-                <h3>Thức ��n mì đùi</h3>
-                <p>Giá: 25,000đ</p>
-              </div>
-            </div>
-            {/* Repeat this component for each food item */}
-          </div>
+          <Row className='foods-section'>
+            {isLoading
+              ? <div key={1}>loading</div>
+              : (
+                dishes && dishes?.map((dish, index) =>
+                  <Col
+                    key={index}
+                    xs={{
+                      flex: '60%',
+                    }}
+                    sm={{
+                      flex: '50%',
+                    }}
+                    md={{
+                      flex: '50%',
+                    }}
+                    lg={{
+                      flex: '33.33%',
+                    }}
+                    xl={{
+                      flex: '20%',
+                    }}
+                  >
+                    <SectionFoodItem cateImg={dish?.image} name={dish?.name} desc={dish?.description} price={dish?.price} />
+                  </Col>
+                )
+              )}
+          </Row>
 
-          <Pagination align="center" defaultCurrent={1} total={50} responsive onChange={(e) => setPage(e)} />
+          {!isLoading && <Pagination align="center" defaultCurrent={paginationNumber+1} total={paginationC} responsive onChange={(e) => handlePageChange(e)} />}
         </div>
       </div>
     </section>
