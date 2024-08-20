@@ -15,6 +15,7 @@ function App() {
         {/* Use case: for all roles */}
         <Route path="/" element={<MenuPage />} />
         <Route path={ROUTE.MENU} element={<MenuPage />} />
+        <Route path={ROUTE.LOGIN} element={<Navigate to="/staff" />} />
 
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
