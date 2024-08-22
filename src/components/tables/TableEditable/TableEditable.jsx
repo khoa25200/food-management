@@ -1,18 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import './TableEditable.less';
-import { Button, Form, Popconfirm, Space } from 'antd';
+import { Button, Popconfirm, Space, Modal, Form } from 'antd';
 import { useMounted } from '~/utils/useMounted';
 import TableEditableCell from './TableEditableCell';
 import { Table } from '../table/Table';
+import { PlusCircleFilled } from '@ant-design/icons';
 
 const getInputType = (dataIndex) => {
   if (dataIndex === 'price') {
-    return 'number'; // Xử lý trường hợp số
+    return 'number'; // Handle number fields
   }
   if (dataIndex === 'image') {
-    return 'image'; // Xử lý trường hợp hình ảnh
+    return 'image'; // Handle image fields
   }
-  return 'text'; // Các trường hợp còn lại
+  return 'text'; // Default case
 };
 
 function TableEditable({
@@ -21,6 +22,8 @@ function TableEditable({
   columnsPre,
   callUpdateApi,
   callDeleteApi,
+  callCreateApi,
+  createForm // Form passed as a prop from outside
 }) {
   const [form] = Form.useForm();
   const [tableData, setTableData] = useState({
@@ -29,6 +32,7 @@ function TableEditable({
     loading: false,
   });
   const [editingKey, setEditingKey] = useState(null);
+  const [showCreateModal, setShowCreateModal] = useState(false);
   const { isMounted } = useMounted();
 
   const fetch = useCallback(
@@ -62,7 +66,6 @@ function TableEditable({
   const isEditing = (record) => record.key === editingKey;
 
   const edit = (record) => {
-    console.log({record})
     form.setFieldsValue({ ...record });
     setEditingKey(record.key);
   };
@@ -81,7 +84,7 @@ function TableEditable({
         newData.splice(index, 1, { ...newData[index], ...row });
         setTableData((prev) => ({ ...prev, data: newData }));
         setEditingKey(null);
-        callUpdateApi(row);
+        callUpdateApi(key, row);
       }
     } catch (errInfo) {
       console.error('Validate Failed:', errInfo);
@@ -94,6 +97,20 @@ function TableEditable({
       data: prev.data.filter((item) => item.key !== key)
     }));
     callDeleteApi(key);
+  };
+
+  const handleCreate = async () => {
+    try {
+      const newEntry = await createForm.validateFields();
+      const result = await callCreateApi(newEntry);
+      setTableData((prev) => ({
+        ...prev,
+        data: [...prev.data, result.data],
+      }));
+      setShowCreateModal(false);
+    } catch (errInfo) {
+      console.error('Validate Failed:', errInfo);
+    }
   };
 
   const columns = [
@@ -143,24 +160,37 @@ function TableEditable({
   });
 
   return (
-    <Form form={form} component={false} className="edit-table">
-      <Table
-        components={{ body: { cell: TableEditableCell } }}
-        bordered
-        dataSource={tableData.data}
-        columns={mergedColumns}
-        rowClassName="editable-row"
-        pagination={{
-          ...tableData.pagination,
-          showSizeChanger: true,
-          onChange: (page, pageSize) => {
-            handleTableChange({ current: page, pageSize });
-          },
-        }}
-        loading={tableData.loading}
-        scroll={{ x: 800 }}
-      />
-    </Form>
+    <>
+      <Button type="primary" icon={<PlusCircleFilled />} prefixCls='create-button' onClick={() => setShowCreateModal(true)}>
+        Thêm mới
+      </Button>
+      <Form form={form} component={false} className="edit-table">
+        <Table
+          components={{ body: { cell: TableEditableCell } }}
+          bordered
+          dataSource={tableData.data}
+          columns={mergedColumns}
+          rowClassName="editable-row"
+          pagination={{
+            ...tableData.pagination,
+            showSizeChanger: true,
+            onChange: (page, pageSize) => {
+              handleTableChange({ current: page, pageSize });
+            },
+          }}
+          loading={tableData.loading}
+          scroll={{ x: 800 }}
+        />
+      </Form>
+      <Modal
+        title="Thêm mới mục"
+        open={showCreateModal}
+        onOk={handleCreate}
+        onCancel={() => setShowCreateModal(false)}
+      >
+        {createForm}
+      </Modal>
+    </>
   );
 }
 

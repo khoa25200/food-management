@@ -1,8 +1,11 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import './TableFoodManagement.less';
 import TableEditable from '~/components/tables/TableEditable';
 import api from '~/utils/HttpRequest';
 import { API, GET_METHOD } from '~/configs/consts/api.const';
+import { deleteDish, updateDish } from '~/services/dish-api.service';
+import FormCreateDish from '~/components/forms/FormCreateDish';
+import { getAllCategories } from '~/services/category.service';
 
 const getAllDishes = async (page = 0, size = 10, sortBy = 'id', sortDirection = 'asc') => {
   try {
@@ -26,6 +29,18 @@ const getAllDishes = async (page = 0, size = 10, sortBy = 'id', sortDirection = 
 };
 
 function TableFoodManagement() {
+  const [categories, setCategories] = useState([]);
+  const handleGetCategories = useCallback(
+    async () => {
+      const categories = await getAllCategories();
+      setCategories(categories);
+    },
+    []
+  );
+  useEffect(() => {
+    handleGetCategories();
+  }, []);
+
   const getDishedData = useCallback(
     async (pagination) => {
       const { current = 1, pageSize = 10 } = pagination;
@@ -42,15 +57,17 @@ function TableFoodManagement() {
   );
 
   const handleUpdateFood = useCallback(
-    async (data) => {
-      console.log('update food', data);
+    async (key, data) => {
+      // update dish api
+      await updateDish(key, JSON.stringify(data));
     },
     []
   );
 
   const handleDeleteFood = useCallback(
     async (key) => {
-      console.log('xoa food api', key);
+      // delete dish api
+      await deleteDish(key)
     },
     []
   );
@@ -64,7 +81,7 @@ function TableFoodManagement() {
     { title: 'Phân loại', dataIndex: 'categoryId', width: '10%', editable: true },
   ];
 
-  return <TableEditable getEditableTableData={getDishedData} columnsPre={columns} initialPagination={{ current: 1, pageSize: 10 }} callUpdateApi={handleUpdateFood} callDeleteApi={handleDeleteFood}/>;
+  return <TableEditable getEditableTableData={getDishedData} columnsPre={columns} initialPagination={{ current: 1, pageSize: 10 }} callUpdateApi={handleUpdateFood} callDeleteApi={handleDeleteFood} createForm={<FormCreateDish categories={categories}/>}/>;
 }
 
 export default TableFoodManagement;
