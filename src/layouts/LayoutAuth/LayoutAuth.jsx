@@ -9,11 +9,13 @@ function LayoutAuth({ role, content }) {
   return (
     <Layout className='auth-layout'>
       <LayoutHeader role={role} />
-      <Flex>
-        <SpaceEmptyAuth />
-        <Content className='layout-content'>{content}</Content>
-      </Flex>
-      <LayoutFooter role={role} />
+      <Content prefixCls='content-has-header'>
+        <Flex>
+          <SpaceEmptyAuth />
+          <Content className='layout-content'>{content}</Content>
+        </Flex>
+        <LayoutFooter role={role} />
+      </Content>
     </Layout>
   );
 }

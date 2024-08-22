@@ -10,10 +10,11 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import Sider from 'antd/es/layout/Sider';
-import { Footer } from 'antd/es/layout/layout';
+import { Footer, Header } from 'antd/es/layout/layout';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE } from '~/configs/consts/route.const';
 const { Content } = Layout;
+
 function getItem(label, key, icon, children) {
   return {
     key,
@@ -44,7 +45,9 @@ function LayoutManagement({ role, breadcrumb, route = ROUTE.FOOD_MANAGEMENT, con
   }
   return (
     <>
-      <LayoutHeader role={role} />
+      <Header style={{ display: 'flex', alignItems: 'center' }}>
+        <div className="demo-logo" />
+      </Header>
       <Layout
         style={{
           minHeight: '100vh',

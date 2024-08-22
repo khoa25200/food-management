@@ -1,9 +1,6 @@
 import { GET_METHOD } from '~/configs/consts/api.const'
-// import { config } from './../config'
 import { buildParams } from './Helper'
 
-import ReactDOM from 'react-dom'
-// import { getToken } from '../layout/pages/ShoppingCartPage/helpers'
 
 export const ConfigType = {
   data: Object,
@@ -84,45 +81,32 @@ const api = async ({
     response => {
       if (response.ok) {
         if (response.status !== 204) {
-          return response.json()
+          return response?.json();
         }
       } else {
-        if (response.status === 500) {
-          // show pop up error
-          // showPopupError({
-          //   response,
-          //   status:
-          //     'Sorry, the website is currently experiencing system problems',
-          // })
-        }
-        if (response.status === 401) {
-          const checkURL = new URL(url)
-          const arr = checkURL.pathname.split('/')
-          const keyCheck = arr[arr.length - 1]
-          console.log(checkURL)
-          // if (keyCheck === 'AddToWishlist') {
-          //   const parent = document.querySelector('.user__auth[popup]')
-          //   parent
-          //     .querySelector(`[data-user="wishlistUnlogin"]`)
-          //     .classList.add('active')
-          // } else {
-          //   showPopupAuthorizedError({
-          //     response,
-          //     status: 'You have been logged out, please login again',
-          //   })
-          // }
-        }
+        switch (response.status) {
+          case 500:
+            // Handle 500 error here
+            break;
 
-        return response.json().then(result => {
-          return Promise.reject(
-            new Error(result?.title || result?.message || result?.code),
-          )
-        })
+          case 401:
+            const checkURL = new URL(url);
+            const arr = checkURL.pathname.split('/');
+            // Handle 401 error here
+            break;
+
+          default:
+            return response.json().then(result => {
+              return Promise.reject(
+                new Error(result?.title || result?.message || result?.code),
+              );
+            });
+        }
       }
     },
   )
-  if (!response) return
-  return response
+  if (!response) return;
+  return response;
 }
 
 export default api

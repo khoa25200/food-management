@@ -32,29 +32,11 @@ const settings = {
   ]
 };
 
-const items = [
-  <SectionCategoryItem cateImg={IMAGES.cate1} cateTitle='Mì ramen' />,
-  <SectionCategoryItem cateImg={IMAGES.cate1} cateTitle='Mì ramen' />,
-  <SectionCategoryItem cateImg={IMAGES.cate1} cateTitle='Mì ramen' />,
-  <SectionCategoryItem cateImg={IMAGES.cate1} cateTitle='Mì ramen' />,
-  <SectionCategoryItem cateImg={IMAGES.cate1} cateTitle='Mì ramen' />,
-  <SectionCategoryItem cateImg={IMAGES.cate1} cateTitle='Mì ramen' />,
-  <SectionCategoryItem cateImg={IMAGES.cate1} cateTitle='Mì ramen' />,
-  <SectionCategoryItem cateImg={IMAGES.cate1} cateTitle='Mì ramen' />,
-  <SectionCategoryItem cateImg={IMAGES.cate1} cateTitle='Mì ramen' />,
-  <SectionCategoryItem cateImg={IMAGES.cate1} cateTitle='Mì ramen' />,
-  <SectionCategoryItem cateImg={IMAGES.cate1} cateTitle='Mì ramen' />,
-  <SectionCategoryItem cateImg={IMAGES.cate1} cateTitle='Mì ramen' />,
-  <SectionCategoryItem cateImg={IMAGES.cate1} cateTitle='Mì ramen' />,
-  <SectionCategoryItem cateImg={IMAGES.cate1} cateTitle='Mì ramen' />,
-  <SectionCategoryItem cateImg={IMAGES.cate1} cateTitle='Mì ramen' />,
-];
-
-function SectionCategory() {
+function SectionCategory({categories}) {
 
   return (
     <section>
-      <CarousalBasic itemsList={items} settings={settings} />
+      <CarousalBasic itemsList={categories.map((cate)=><SectionCategoryItem key={cate.id} id={cate.id} cateImg={cate.image||IMAGES.cate1} cateTitle={cate.name}/>)} settings={settings} />
     </section>
   );
 }
