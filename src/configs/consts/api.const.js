@@ -5,7 +5,12 @@ const baseUrl = (!baseUrlENV || baseUrlENV == '/') ? 'https://truthful-tendernes
 const DEFAULT_BASE_URL = baseUrl + `/api/v1/auth`;
 
 export const API = {
-  GET_ALL_DISHES: `${DEFAULT_BASE_URL}/dishes`
+  GET_ALL_DISHES: `${DEFAULT_BASE_URL}/dishes`,
+
+
+
+
+  CREATE_IMG_URL: `${DEFAULT_BASE_URL}/image`,
 }
 
 export const GET_METHOD = 'GET'

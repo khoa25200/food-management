@@ -1,0 +1,44 @@
+{
+  "data": [
+    {
+      "key": 1,
+      "name": "Edward",
+      "age": 32,
+      "address": "London Park no.1",
+      "test": "test"
+    },
+    {
+      "key": 2,
+      "name": "Alex",
+      "age": 45,
+      "address": "London Park no.2",
+      "test": "test"
+    },
+    {
+      "key": 3,
+      "name": "Niko",
+      "age": 21,
+      "address": "London Park no.3",
+      "test": "test"
+    },
+    {
+      "key": 4,
+      "name": "Josh",
+      "age": 18,
+      "address": "London Park no.4",
+      "test": "test"
+    },
+    {
+      "key": 5,
+      "name": "Jo",
+      "age": 15,
+      "address": "Minsk Park no.1",
+      "test": "test"
+    }
+  ],
+  "pagination": {
+    "currentPage": 1,
+    "pageSize": 5,
+    "total": 16
+  }
+}

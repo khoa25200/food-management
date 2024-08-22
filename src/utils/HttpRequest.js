@@ -1,4 +1,3 @@
-// TODO: Remove eslint-disable
 import { GET_METHOD } from '~/configs/consts/api.const'
 // import { config } from './../config'
 import { buildParams } from './Helper'
@@ -75,16 +74,12 @@ const api = async ({
     redirect: 'follow',
     sameSite: 'None',
     ...options,
-    body: JSON.stringify(data),
+    body: data,
   }
 
   if (method === GET_METHOD) {
     delete opts.body
   }
-  console.log({
-    url
-  })
-
   const response = await fetch(`${url}?${buildParams(params)}`, opts).then(
     response => {
       if (response.ok) {
