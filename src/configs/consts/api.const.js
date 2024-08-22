@@ -6,11 +6,21 @@ const DEFAULT_BASE_URL = baseUrl + `/api/v1/auth`;
 
 export const API = {
   GET_ALL_DISHES: `${DEFAULT_BASE_URL}/dishes`,
+  GET_ALL_CATEGORIES: `${DEFAULT_BASE_URL}/category`,
 
 
 
 
   CREATE_IMG_URL: `${DEFAULT_BASE_URL}/image`,
+
+
+
+
+  UPDATE_DISH: `${DEFAULT_BASE_URL}/dishes`,
+
+
+
+  DELETE_DISH: `${DEFAULT_BASE_URL}/dishes`
 }
 
 export const GET_METHOD = 'GET'
