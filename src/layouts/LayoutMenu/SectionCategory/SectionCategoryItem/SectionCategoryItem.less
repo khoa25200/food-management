@@ -4,7 +4,7 @@
     margin: 20px 8px;
     border-radius: var(--radius);
     background: #fff;
-    box-shadow: var(--Shadow-S);
+    box-shadow: var(@Shadow-S);
     transition: transform .3s;
     will-change: transform;
     position: relative;
@@ -37,12 +37,12 @@
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
-      background: var(--Shades-W, #fff);
+      background: var(@Shades-W, #fff);
       border-bottom-right-radius: var(--radius);
       border-bottom-left-radius: var(--radius);
 
       h2 {
-        color: var(--Shades-B, #000);
+        color: var(@Shades-B, #000);
         font-size: 1rem;
         font-style: normal;
         font-weight: 600;

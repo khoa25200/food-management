@@ -3,7 +3,7 @@ import './ButtonSubmit.less';
 import { Button } from 'antd';
 function ButtonSubmit({ text, type = 'primary', htmlType = 'submit', color }) {
   return (
-    <Button type={type} htmlType={htmlType} style={{
+    <Button type='primary' htmlType={htmlType} style={{
       borderRadius: 3
     }}>
       {text}
