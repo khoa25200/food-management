@@ -1,10 +1,10 @@
 .footer {
   background-color: @primary-color;
-  padding: 24px 240px;
   text-align: center;
   font-size: 14px;
   color: #fff;
   position: relative;
+  max-width: 1360px;
 
   .footer-content {
     display: flex;
@@ -45,5 +45,11 @@
         /* Biểu tượng nhỏ hơn */
       }
     }
+  }
+}
+
+@media (max-width: 1142px) {
+  footer {
+    padding: 0;
   }
 }
