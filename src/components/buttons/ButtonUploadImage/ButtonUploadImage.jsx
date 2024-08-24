@@ -15,11 +15,12 @@ const handleUploadApi = async (data) => {
   }
 };
 
-function ButtonUploadImage({ initUrl, getResUrl }) {
+function ButtonUploadImage({ initUrl, getResUrl, uploading }) {
   const [imageUrl, setImageUrl] = useState(initUrl);
   const [loading, setLoading] = useState(false);
   const customRequest = async ({ file, onSuccess, onError }) => {
     setLoading(true); // Start loading indicator
+    uploading(true);
     try {
       const formData = new FormData();
       formData.append('file', file);
@@ -49,6 +50,7 @@ function ButtonUploadImage({ initUrl, getResUrl }) {
       onError(error);
     } finally {
       setLoading(false); // Stop loading indicator
+      uploading(false);
     }
   };
 

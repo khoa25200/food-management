@@ -1,20 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import './TableEditable.less';
-import { Button, Popconfirm, Space, Modal, Form } from 'antd';
+import { Button, Popconfirm, Space, Form } from 'antd';
 import { useMounted } from '~/utils/useMounted';
 import TableEditableCell from './TableEditableCell';
 import { Table } from '../table/Table';
-import { PlusCircleFilled } from '@ant-design/icons';
+import { CloseCircleOutlined, DeleteFilled, EditFilled, PlusCircleFilled, SaveFilled } from '@ant-design/icons';
+import { getInputType } from '~/configs/fields/input.configs';
 
-const getInputType = (dataIndex) => {
-  if (dataIndex === 'price') {
-    return 'number'; // Handle number fields
-  }
-  if (dataIndex === 'image') {
-    return 'image'; // Handle image fields
-  }
-  return 'text'; // Default case
-};
 
 function TableEditable({
   initialPagination = { current: 0, pageSize: 10 },
@@ -22,8 +14,7 @@ function TableEditable({
   columnsPre,
   callUpdateApi,
   callDeleteApi,
-  callCreateApi,
-  createForm // Form passed as a prop from outside
+  setShowCreateModal
 }) {
   const [form] = Form.useForm();
   const [tableData, setTableData] = useState({
@@ -32,8 +23,9 @@ function TableEditable({
     loading: false,
   });
   const [editingKey, setEditingKey] = useState(null);
-  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const { isMounted } = useMounted();
+
 
   const fetch = useCallback(
     async (pagination) => {
@@ -74,6 +66,13 @@ function TableEditable({
     setEditingKey(null);
   };
 
+  const handleUpdateImg = (url) => {
+    form.setFieldsValue({ image: url });
+  }
+  const handleUploadingImg = (status) => {
+    setUploading(status);
+  }
+
   const save = async (key) => {
     try {
       const row = await form.validateFields();
@@ -99,20 +98,6 @@ function TableEditable({
     callDeleteApi(key);
   };
 
-  const handleCreate = async () => {
-    try {
-      const newEntry = await createForm.validateFields();
-      const result = await callCreateApi(newEntry);
-      setTableData((prev) => ({
-        ...prev,
-        data: [...prev.data, result.data],
-      }));
-      setShowCreateModal(false);
-    } catch (errInfo) {
-      console.error('Validate Failed:', errInfo);
-    }
-  };
-
   const columns = [
     ...columnsPre,
     {
@@ -123,19 +108,19 @@ function TableEditable({
         const editable = isEditing(record);
         return editable ? (
           <Space>
-            <Button type="primary" onClick={() => save(record.key)}>
+            <Button icon={<SaveFilled />} type="primary" onClick={() => save(record.key)} disabled={uploading}>
               Lưu
             </Button>
             <Popconfirm title="Xác nhận hủy" onConfirm={cancel} className='popup-confirm' prefixCls='popup-confirm'>
-              <Button type="primary" danger>Hủy</Button>
+              <Button icon={<CloseCircleOutlined />} type="primary" danger>Hủy</Button>
             </Popconfirm>
           </Space>
         ) : (
           <Space>
-            <Button type="primary" disabled={!!editingKey} onClick={() => edit(record)}>
+            <Button icon={<EditFilled />} type="primary" disabled={!!editingKey} onClick={() => edit(record)}>
               Chỉnh sửa
             </Button>
-            <Button type="default" danger onClick={() => handleDeleteRow(record.key)}>
+            <Button icon={<DeleteFilled />} type="default" danger onClick={() => handleDeleteRow(record.key)}>
               Xóa
             </Button>
           </Space>
@@ -155,6 +140,9 @@ function TableEditable({
         dataIndex: col.dataIndex,
         title: col.title,
         editing: isEditing(record),
+        source: col?.source,
+        updateImage: handleUpdateImg,
+        uploading: handleUploadingImg
       }),
     };
   });
@@ -182,14 +170,6 @@ function TableEditable({
           scroll={{ x: 800 }}
         />
       </Form>
-      <Modal
-        title="Thêm mới mục"
-        open={showCreateModal}
-        onOk={handleCreate}
-        onCancel={() => setShowCreateModal(false)}
-      >
-        {createForm}
-      </Modal>
     </>
   );
 }

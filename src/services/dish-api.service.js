@@ -1,9 +1,9 @@
-import { API, DELETE_METHOD, GET_METHOD, PUT_METHOD } from "~/configs/consts/api.const";
+import { API, DELETE_METHOD, GET_METHOD, POST_METHOD, PUT_METHOD } from "~/configs/consts/api.const";
 import { dkLogger } from "~/utils/DkLogger";
 import api from "~/utils/HttpRequest";
 
 
-export const getAllDishes = async (page, size, sortBy = 'id', sortDirection = 'asc') => {
+export const getAllDishes = async (page, size, sortBy = 'id', sortDirection = 'asc', category) => {
   try {
     const dishes = await api({
       url: `${API.GET_ALL_DISHES}`,
@@ -11,15 +11,16 @@ export const getAllDishes = async (page, size, sortBy = 'id', sortDirection = 'a
         page,
         size,
         sortBy,
-        sortDirection
+        sortDirection,
+        ...(category != null && { category })
       },
       method: GET_METHOD,
     })
-    dkLogger('success', 'GET ALL DISHES', null, dishes);
+    // dkLogger('success', 'GET ALL DISHES', null, dishes);
     return dishes;
   }
   catch (error) {
-    dkLogger('error', 'GET ALL DISHES', null, error);
+    // dkLogger('error', 'GET ALL DISHES', null, error);
   }
   return
 }
@@ -51,6 +52,22 @@ export const deleteDish = async (id) => {
   }
   catch (error) {
     dkLogger('error', 'DELETE DISH', null, error);
+  }
+  return
+}
+
+export const createDish = async (data) => {
+  try {
+    const dish = await api({
+      url: `${API.CREATE_DISH}}`,
+      method: POST_METHOD,
+      data: JSON.stringify(data)
+    })
+    dkLogger('success', 'CREATE DISH', null, dish);
+    return dish;
+  }
+  catch (error) {
+    dkLogger('error', 'CREATE DISH', null, error);
   }
   return
 }

@@ -26,7 +26,6 @@ function LayoutMenu({ role }) {
 
   return (
     <>
-      <Layout className='menu-layout'></Layout>
       <LayoutHeader role={role} />
       <Layout className='menu-layout content-has-header'>
         <SectionCategory categories={categories} />
