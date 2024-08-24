@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import './SectionFood.less';
-import { Col, Divider, Pagination, Radio, Row, Select, Space } from 'antd';
+import { Button, Col, Divider, Flex, Pagination, Radio, Row, Select, Space } from 'antd';
 import { DEFAULT_PAGE_SIZE } from '~/configs/consts/app.const';
 import SectionFoodItem from './SectionFoodItem';
 import { getAllDishes } from '~/services/dish-api.service';
-import { ArrowDownOutlined, ArrowUpOutlined, UserOutlined } from '@ant-design/icons';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { ArrowDownOutlined, ArrowUpOutlined, FilterFilled, UserOutlined } from '@ant-design/icons';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { categoryState } from '~/states/category.state';
 import SectionFoodMenuSkeleton from './Skeleton/SectionFoodMenuSkeleton';
 const filterSortData = [
@@ -48,7 +48,7 @@ const handleFilterDataSelect = (id) => {
 
 
 function SectionFood({ categories }) {
-  const cateState = useRecoilState(categoryState);
+  const [cateState, setCateState] = useRecoilState(categoryState);
 
   const [dishes, setDishes] = useState([]);
   const [isLoading, setLoading] = useState(false);
@@ -58,16 +58,10 @@ function SectionFood({ categories }) {
     setFilterSort(value);
   };
 
-  const [category, setCategory] = useState(categories[0]?.id);
   const onChange = (e) => {
-    setCategory(categories[e.target.value - 1].id);
+    const id = categories[e.target.value - 1].id;
+    setCateState(id);
   };
-
-  useEffect(() => {
-    if (cateState && cateState.length > 0) {
-      setCategory(cateState[0]);
-    }
-  }, [cateState]);
 
   const [page, setPage] = useState(0);
   const [paginationC, setPaginationC] = useState(10);
@@ -76,7 +70,7 @@ function SectionFood({ categories }) {
   const handleApiGetDishesReq = async () => {
     setLoading(true);
     const sortParams = handleFilterDataSelect(filterSort);
-    const dishes = await getAllDishes(page, DEFAULT_PAGE_SIZE, sortParams.sort, sortParams.order);
+    const dishes = await getAllDishes(page, DEFAULT_PAGE_SIZE, sortParams.sort, sortParams.order, cateState);
 
     if (!dishes || !dishes.content) return;
     setLoading(false);
@@ -88,15 +82,44 @@ function SectionFood({ categories }) {
 
   useEffect(() => {
     handleApiGetDishesReq();
-  }, [page, category, filterSort]);
+  }, [page, cateState, filterSort]);
+
+  useEffect(() => {
+    console.log('call api', cateState)
+  }, [cateState]);
 
   const handlePageChange = (e) => {
     setPage(e - 1);
   };
 
+  const handleRemoveFilter = () => {
+    setCateState(null);
+    setPage(0);
+    setFilterSort(0);
+  }
+
   return (
-    <div className='outer-food-section'>
+    <div className='outer-food-section' id='filter'>
       <section>
+        <Flex className="responsive-filter" vertical>
+          <Radio.Group onChange={onChange} value={cateState} className='radio'>
+              {categories?.map((value) => <Radio.Button key={value.id} value={value.id}>{value.name}</Radio.Button>)}
+
+          </Radio.Group>
+          <Flex justify='space-between' align='center'>
+            <Select
+              prefixCls='sort'
+              defaultValue={0}
+              onChange={handleFilterSortChange}
+              options={filterSortData.map((opt) => ({
+                label: <>{opt.icon} {opt.name}</>,
+                value: opt.id,
+              }))}
+              value={filterSort}
+            />
+            <Button type='dashed' icon={<FilterFilled />} onClick={handleRemoveFilter}>Xóa bộ lọc</Button>
+          </Flex>
+        </Flex>
         <div className='food-section'>
           <div className='filter-sidebar'>
             <div className='sticky'>
@@ -112,16 +135,18 @@ function SectionFood({ categories }) {
                     label: <>{opt.icon} {opt.name}</>,
                     value: opt.id,
                   }))}
+                  value={filterSort}
                 />
                 <Divider />
-                <div className="catorory-filter">
+                <div className="category-filter">
                   <div className="cate-header">Danh mục</div>
-                  <Radio.Group onChange={onChange} value={category}>
+                  <Radio.Group onChange={onChange} value={cateState}>
                     <Space direction="vertical">
                       {categories?.map((value) => <Radio key={value.id} value={value.id}>{value.name}</Radio>)}
                     </Space>
                   </Radio.Group>
                 </div>
+                <Button type='dashed' icon={<FilterFilled />} onClick={handleRemoveFilter}>Xóa bộ lọc</Button>
               </div>
             </div>
           </div>
@@ -159,7 +184,7 @@ function SectionFood({ categories }) {
           </div>
         </div>
       </section>
-    </div>
+    </div >
   );
 }
 

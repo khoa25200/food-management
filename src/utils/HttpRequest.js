@@ -77,7 +77,7 @@ const api = async ({
   if (method === GET_METHOD) {
     delete opts.body
   }
-  const response = await fetch(`${url}?${buildParams(params)}`, opts).then(
+  const response = await fetch(`${url}${buildParams(params)}`, opts).then(
     response => {
       if (response.ok) {
         if (response.status !== 204) {

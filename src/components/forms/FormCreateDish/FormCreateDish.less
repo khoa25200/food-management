@@ -1,0 +1,74 @@
+// FormCreateDish.less
+
+@primary-color: #1890ff;
+@hover-color: darken(@primary-color, 10%);
+@background-color: #f9f9f9;
+@border-radius: 8px;
+@box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+@transition: 0.3s ease-in-out;
+
+// Container của form
+.form-container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 30px;
+  background: @background-color;
+  border-radius: @border-radius;
+  box-shadow: @box-shadow;
+}
+
+// Tiêu đề của form
+.form-title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: @primary-color;
+  font-weight: 700;
+}
+
+// Các mục trong form
+.create-dish-form {
+  .ant-form-item {
+    margin-bottom: 24px;
+    width: 100%;
+
+    .ant-form-item-label {
+      font-weight: 600;
+      color: #333;
+      width: 100%;  // Label chiếm toàn bộ chiều rộng
+    }
+    
+    .ant-form-item-control {
+      width: 100%;
+    }
+  }
+
+  // Các input và select
+  .ant-input,
+  .ant-input-number,
+  .ant-select {
+    border-radius: @border-radius;
+    background-color: #fff;
+    box-shadow: @box-shadow;
+    transition: border-color @transition;
+    width: 100%;
+
+    &:hover {
+      border-color: @primary-color;
+    }
+  }
+
+  // Nút chính
+  .ant-btn-primary {
+    background-color: @primary-color;
+    border-color: @primary-color;
+    border-radius: @border-radius;
+    box-shadow: @box-shadow;
+    transition: background-color @transition, border-color @transition;
+    width: auto;
+    
+    &:hover {
+      background-color: @hover-color;
+      border-color: @hover-color;
+    }
+  }
+}

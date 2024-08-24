@@ -66,11 +66,16 @@ function LayoutManagement({ role, breadcrumb, route = ROUTE.FOOD_MANAGEMENT, con
             <Breadcrumb
               style={{
                 margin: '16px 0',
-              }}
-            >
-              <Breadcrumb.Item>Quản lý</Breadcrumb.Item>
-              <Breadcrumb.Item>{breadcrumb || ''}</Breadcrumb.Item>
-            </Breadcrumb>
+              }} items={[
+                {
+                  href: '',
+                  title: 'Quản lý',
+                },
+                {
+                  href: '',
+                  title: breadcrumb || '',
+                }
+              ]} />
             <div
               style={{
                 padding: 24,

@@ -12,7 +12,7 @@ export const API = {
 
 
   CREATE_IMG_URL: `${DEFAULT_BASE_URL}/image`,
-
+  CREATE_DISH: `${DEFAULT_BASE_URL}/dishes`,
 
 
 
