@@ -30,7 +30,6 @@ function OrderTableList({ tables, openMenu }) {
           handleTableSelected={handleTableSelected}
           openMenu={openMenu}
           selecting={table.selecting}
-          setSelectedTable={setSelectedTable}
         />
       ))}
     </Flex>

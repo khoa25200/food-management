@@ -20,6 +20,9 @@ function SectionDisplayPOS() {
     } else {
       setDishes([]);
     }
+    console.log({
+      selectedTable
+    })
   }, [selectedTable]);
 
   const isDisableRemove = !!selectedTable?.id;
@@ -98,7 +101,7 @@ function SectionDisplayPOS() {
 
     return dishes.map((dish, index) => (
       <MemoizedFoodDisplayItem
-        key={dish.dishId}
+        key={index}
         index={index}
         dish={dish}
         isDeleteApi={isDisableRemove}
