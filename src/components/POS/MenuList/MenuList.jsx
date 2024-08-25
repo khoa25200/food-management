@@ -39,7 +39,8 @@ function MenuList({ dishes, openMenu }) {
       disableRemove: prevState.disableRemove,
       data: {
         ...prevState.data,
-        orderDetailRequests: dishedState
+        dishesOfTable: prevState.data?.dishesOfTable,
+        orderDetailRequests: dishedState,
       }
     }));
   }

@@ -7,10 +7,14 @@ import SectionCategory from './SectionCategory';
 import SectionBanner from './SectionBanner';
 import SectionFood from './SectionFood';
 import { getAllCategories } from '~/services/category.service';
+import { useNavigate } from 'react-router-dom';
+import { ROUTE } from '~/configs/consts/route.const';
+import { ROLE } from '~/configs/consts/role.const';
 
 
 
 function LayoutMenu({ role }) {
+  const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const handleGetCategories = useCallback(
     async () => {
@@ -24,6 +28,13 @@ function LayoutMenu({ role }) {
     handleGetCategories();
   }, []);
 
+  const handleClickItem = () => {
+    if(role===ROLE.USER){
+      
+    }
+    navigate(`/${role}/${ROUTE.POS}`)
+  }
+
   return (
     <>
       <LayoutHeader role={role} />
@@ -32,7 +43,7 @@ function LayoutMenu({ role }) {
         <Divider />
         <SectionBanner />
         <Divider />
-        <SectionFood categories={categories} />
+        <SectionFood categories={categories} handleClickItem={handleClickItem} />
       </Layout>
       <LayoutFooter role={role} /></>
   );

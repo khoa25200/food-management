@@ -2,14 +2,17 @@ import React, { useState } from 'react';
 import './OrderTable.less';
 import { convertVNDCurrency } from '~/utils/Helper';
 import { getOrderByTable } from '~/services/pos.service';
-import { useSetRecoilState } from 'recoil';
-import { orderTableLoading } from '~/states/pos.state';
-function OrderTable({ table, handleTableSelected, openMenu, selecting, setSelectedTable }) {
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { orderTableLoading, selectedTableState } from '~/states/pos.state';
+function OrderTable({ table, handleTableSelected, openMenu, selecting }) {
   const setLoadingForGetOrderTable = useSetRecoilState(orderTableLoading);
+  const [selectedTable, setSelectedTable] = useRecoilState(selectedTableState);
+
   const handleCheckOrderByTable = async (tableId) => {
     if (table.status) {
       setLoadingForGetOrderTable(true);
       const tableSelectedRes = await getOrderByTable(tableId);
+
       const dishesOfTable = tableSelectedRes?.orderDetailRequests?.map(dish => dish?.dishId);
       const tableSelectedDataState = {
         id: table.id,

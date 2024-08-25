@@ -2,9 +2,9 @@ import React from 'react';
 import './SectionFoodItem.less';
 import { TagOutlined } from '@ant-design/icons';
 import { convertVNDCurrency } from '~/utils/Helper';
-function SectionFoodItem({ cateImg, name, desc, price }) {
+function SectionFoodItem({ cateImg, name, desc, price, handleClickItem }) {
   return (
-    <div className='category-food-item'>
+    <div className='category-food-item' onClick={handleClickItem}>
       <article>
         <div>
           <div className='tag'>

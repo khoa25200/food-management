@@ -47,7 +47,7 @@ const handleFilterDataSelect = (id) => {
 }
 
 
-function SectionFood({ categories }) {
+function SectionFood({ categories, handleClickItem }) {
   const [cateState, setCateState] = useRecoilState(categoryState);
 
   const [dishes, setDishes] = useState([]);
@@ -103,7 +103,7 @@ function SectionFood({ categories }) {
       <section>
         <Flex className="responsive-filter" vertical>
           <Radio.Group onChange={onChange} value={cateState} className='radio'>
-              {categories?.map((value) => <Radio.Button key={value.id} value={value.id}>{value.name}</Radio.Button>)}
+            {categories?.map((value) => <Radio.Button key={value.id} value={value.id}>{value.name}</Radio.Button>)}
 
           </Radio.Group>
           <Flex justify='space-between' align='center'>
@@ -174,7 +174,7 @@ function SectionFood({ categories }) {
                         flex: '20%',
                       }}
                     >
-                      <SectionFoodItem cateImg={dish?.image} name={dish?.name} desc={dish?.description} price={dish?.price} />
+                      <SectionFoodItem handleClickItem={handleClickItem} cateImg={dish?.image} name={dish?.name} desc={dish?.description} price={dish?.price} />
                     </Col>
                   )
                 )}
