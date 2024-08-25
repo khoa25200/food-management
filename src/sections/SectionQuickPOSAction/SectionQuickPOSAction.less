@@ -1,0 +1,42 @@
+.section-quick-pos-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  border-bottom: 1px solid #e8e8e8;
+  width: 100%;
+  height: 100%;
+
+  .btn {
+    color: rgb(139, 139, 139);
+  }
+
+  .ant-space {
+    display: flex;
+    align-items: center;
+
+    .separator {
+      height: 20px;
+      border-left: 1px solid #e8e8e8;
+      margin: 0 10px;
+
+    }
+
+    .anticon {
+      font-size: 16px;
+      /* Điều chỉnh kích thước icon */
+      margin: 0 10px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .section-quick-pos-action {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .ant-space {
+      margin-top: 10px;
+    }
+  }
+}

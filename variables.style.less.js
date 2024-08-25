@@ -1,6 +1,7 @@
 export const varStylesConfig = {
   '@primary-color': '#FF881D',
   '@height-header': '112px',
+  '@height-pos': '50px',
   '@height-header-mobi': '72px',
   '@height-header-mobi-with-search': '80px',
 
