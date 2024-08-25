@@ -1,0 +1,38 @@
+.pos-wrapper {
+  height: 100dvh;
+
+  .nav {
+    height: @height-pos;
+    background-color: #34495e;
+  }
+
+  .main {
+    height: calc(100dvh - @height-pos);
+
+    .display {
+      background-color: #f0f8ff;
+      height: 100%;
+      @height-quick-actions: 40px;
+      @height-main-actions: 140px;
+
+      .quick-actions {
+        height: @height-quick-actions;
+        background-color: #f0f0f0;
+      }
+
+      .display-wrapper {
+        height: calc(100% - @height-main-actions - @height-quick-actions);
+      }
+
+      .main-actions {
+        height: @height-main-actions;
+        background-color: #f0f0f0;
+      }
+    }
+
+    .option {
+      background-color: #f3f5f6;
+      padding: 10px 20px;
+    }
+  }
+}

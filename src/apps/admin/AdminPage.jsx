@@ -10,6 +10,7 @@ import ForgotPasswordPage from '~/pages/forgot-password';
 import ManagementUserPage from '~/pages/management-user-page';
 import ManagementFoodPage from '~/pages/management-food-page';
 import ManagementTablePage from '~/pages/management-table-page';
+import POSPage from '~/pages/pos-page';
 
 const adminRoutes = [
   { path: `/${ROUTE.LOGIN}`, element: <LoginPage role={ROLE.ADMIN} /> },
@@ -19,6 +20,7 @@ const adminRoutes = [
   { path: `/${ROUTE.USER_MANAGEMENT}`, element: <ManagementUserPage role={ROLE.ADMIN} /> },
   { path: `/${ROUTE.FOOD_MANAGEMENT}`, element: <ManagementFoodPage role={ROLE.ADMIN} /> },
   { path: `/${ROUTE.TABLE_MANAGEMENT}`, element: <ManagementTablePage role={ROLE.ADMIN} /> },
+  { path: `/${ROUTE.POS}`, element: <POSPage role={ROLE.ADMIN} /> },
 
 
   /*Use case: Error route to redirect to login*/
