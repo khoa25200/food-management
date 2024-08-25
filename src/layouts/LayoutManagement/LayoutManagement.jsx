@@ -3,6 +3,7 @@ import './LayoutManagement.less';
 import LayoutHeader from '../LayoutHeader';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import {
+  CompressOutlined,
   DesktopOutlined,
   FileOutlined,
   PieChartOutlined,
@@ -25,11 +26,10 @@ function getItem(label, key, icon, children) {
 }
 
 const items = [
+  getItem('POS', ROUTE.POS, <CompressOutlined />),
   getItem('Món ăn', ROUTE.FOOD_MANAGEMENT, <PieChartOutlined />),
   getItem('Người dùng', ROUTE.USER_MANAGEMENT, <DesktopOutlined />),
   getItem('Bàn', ROUTE.TABLE_MANAGEMENT, <FileOutlined />),
-
-  getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '4'), getItem('Team 2', '5')]),
 ];
 
 function LayoutManagement({ role, breadcrumb, route = ROUTE.FOOD_MANAGEMENT, content }) {

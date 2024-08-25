@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  gap: 5px;
+
+  .item {
+
+    flex: 1 1 20%;
+
+    box-sizing: border-box;
+    margin: 5px;
+
+    @media (max-width: 768px) {
+      flex: 1 1 45%;
+    }
+
+    @media (max-width: 480px) {
+      flex: 1 1 100%;
+    }
+  }
+}

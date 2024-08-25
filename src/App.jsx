@@ -5,7 +5,6 @@ import './App.css'
 import MenuPage from './pages/menu-page';
 import { ROUTE } from 'consts/route.const';
 import { RecoilRoot } from 'recoil';
-
 function App() {
   return (
     <RecoilRoot>

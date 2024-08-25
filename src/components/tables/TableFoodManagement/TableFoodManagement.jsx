@@ -71,9 +71,6 @@ function TableFoodManagement() {
 
   const handleCreateFood = useCallback(
     async (data) => {
-      console.log({
-        dataReq: data
-      })
       await createDish(data);
     },
     []

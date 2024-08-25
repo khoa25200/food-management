@@ -15,7 +15,6 @@ function FormCreateDish({ onFinishFailed, categories, onCloseModal, createDishAp
   const onFinish = async (values) => {
     try {
       setLoading(true);
-      console.log(values);
       await createDishApi(values);
       setLoading(false);
       form.resetFields();
