@@ -5,19 +5,21 @@ import './SectionMainAction.less';
 import { useRecoilState } from 'recoil';
 import { selectedTableState } from '~/states/pos.state';
 import { convertVNDCurrency } from '~/utils/Helper';
+import { paymentOrder, tempCalculator } from '~/services/pos.service';
 
 const SectionMainAction = () => {
   const [selectedTable] = useRecoilState(selectedTableState);
 
   // Prepare the body data for API requests
   const prepareRequestBody = () => {
-    const { data } = selectedTable;
+    const { data, id } = selectedTable;
     return {
       orderId: data.orderId,
       totalPrice: data.totalPrice,
-      tableId: data.tableId,
+      tableId: id,
       userId: data.userId,
       orderDetailRequests: data.orderDetailRequests.map(item => ({
+        id: item.id,
         dishId: item.dishId,
         quantity: item.quantity,
         pricePerItem: item.pricePerItem,
@@ -51,6 +53,13 @@ const SectionMainAction = () => {
     message.info('Đang tách bàn...');
   };
 
+  const handleTempCalculator = async (req) => {
+    await tempCalculator(req);
+  }
+  const handlePayment = async (req) => {
+    await paymentOrder(req);
+  }
+
   const handlePrintCookingOrder = () => {
     message.info('Báo chế biến: Đang xử lý...');
   };
@@ -58,13 +67,15 @@ const SectionMainAction = () => {
   const handleTemporaryCheckout = async () => {
     const requestBody = prepareRequestBody();
     message.info('Tạm tính đã hoàn tất');
-    console.log('Temporary checkout:', { requestBody });
+    console.log('Temporary checkout:', requestBody);
+    handleTempCalculator(requestBody);
   };
 
   const handleCheckout = async () => {
     const requestBody = prepareRequestBody();
     message.info('Thanh toán đã hoàn tất');
     console.log('Checkout:', { requestBody });
+    handlePayment(requestBody);
   };
 
   // Key event handling

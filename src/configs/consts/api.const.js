@@ -16,14 +16,15 @@ export const API = {
 
   CREATE_IMG_URL: `${DEFAULT_BASE_URL}/image`,
   CREATE_DISH: `${DEFAULT_BASE_URL}/dishes`,
-
+  TEMP_ORDER: `${DEFAULT_BASE_URL}/order`,
 
 
   UPDATE_DISH: `${DEFAULT_BASE_URL}/dishes`,
+  PAYMENT_ORDER: `${DEFAULT_BASE_URL}/order`,
 
 
-
-  DELETE_DISH: `${DEFAULT_BASE_URL}/dishes`
+  DELETE_DISH: `${DEFAULT_BASE_URL}/dishes`,
+  DELETE_ORDER_DETAIL: `${DEFAULT_BASE_URL}/orderDetail`
 }
 
 export const GET_METHOD = 'GET'

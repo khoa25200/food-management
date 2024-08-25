@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './FoodDisplayItem.less';
 import { Button, Col, Input, message, notification, Popconfirm, Row } from 'antd';
-import { DeleteFilled, EditOutlined, MinusCircleFilled, NotificationFilled, PlusCircleFilled, RedoOutlined, UserOutlined } from '@ant-design/icons';
+import { DeleteFilled, EditOutlined, MinusCircleFilled, NotificationFilled, PlusCircleFilled, UserOutlined } from '@ant-design/icons';
 import { convertVNDCurrency } from '~/utils/Helper';
+import { deleteOrderDetail } from '~/services/pos.service';
 
-function FoodDisplayItem({ index, dish, isDeleteApi, handleQuantityChange, handleDeleteDish, handleResetDish }) {
+function FoodDisplayItem({ index, dish, isDeleteApi, handleQuantityChange, handleNoteChange, handleDeleteDish, handleResetDish }) {
   const [dishQuantity, setDishQuantity] = useState(dish?.quantity || 1);
   const [note, setNote] = useState(dish?.note || '');
   const [api, contextHolder] = notification.useNotification();
@@ -17,14 +18,26 @@ function FoodDisplayItem({ index, dish, isDeleteApi, handleQuantityChange, handl
   const handleQChange = (e) => {
     const value = e.target.value;
     if (/^\d*$/.test(value)) {
-      setDishQuantity(Number(value));
-      handleQuantityChange(dish.dishId, Number(value));
+      const newQuantity = Number(value);
+      setDishQuantity(newQuantity);
+      handleQuantityChange(dish.dishId, newQuantity, note);
     }
   };
 
+  const handleNoteChangeLocal = (e) => {
+    const newNote = e.target.value;
+    setNote(newNote);
+    handleNoteChange(dish.dishId, newNote);
+  };
+
+  const handleDeleTeOrderDetailApi = async (id) => {
+    await deleteOrderDetail(id);
+  }
+
   const handleDelete = () => {
     if (isDeleteApi) {
-      console.log('delete api')
+      console.log('delete api:', dish.id);
+      handleDeleTeOrderDetailApi(dish.id);
     } else {
       console.log('delete local')
     }
@@ -35,24 +48,22 @@ function FoodDisplayItem({ index, dish, isDeleteApi, handleQuantityChange, handl
   const incrementQuantity = () => {
     const newQuantity = dishQuantity + 1;
     setDishQuantity(newQuantity);
-    handleQuantityChange(dish.dishId, newQuantity);
+    handleQuantityChange(dish.dishId, newQuantity, note);
   };
 
   const decrementQuantity = () => {
     if (dishQuantity <= 1) {
-      handleDelete()
+      handleDelete();
       return;
     }
     const newQuantity = dishQuantity - 1;
     setDishQuantity(newQuantity);
-    handleQuantityChange(dish.dishId, newQuantity);
+    handleQuantityChange(dish.dishId, newQuantity, note);
   };
 
   const handleConfirm = () => {
     console.log('Note:', note, dish.dishId);
   };
-
-
 
   const handleResetField = () => {
     setDishQuantity(dish?.quantity || 1);
@@ -90,7 +101,7 @@ function FoodDisplayItem({ index, dish, isDeleteApi, handleQuantityChange, handl
                       <div>Thêm ghi chú</div>
                       <Input.TextArea
                         value={note}
-                        onChange={(e) => setNote(e.target.value)}
+                        onChange={handleNoteChangeLocal}
                         rows={4}
                         placeholder="Nhập ghi chú của bạn..."
                       />
@@ -159,7 +170,6 @@ function FoodDisplayItem({ index, dish, isDeleteApi, handleQuantityChange, handl
             type='link'
             size='small'
             style={{ padding: 0 }}
-          // disabled={isDisableRemove}
           />
         </Popconfirm>
       </Col>
@@ -170,7 +180,6 @@ function FoodDisplayItem({ index, dish, isDeleteApi, handleQuantityChange, handl
           size='small'
           style={{ padding: 0 }}
           onClick={handleResetField}
-        // disabled={dishQuantity === dish?.quantity && note === dish?.note}
         />
       </Col> */}
     </Row>
