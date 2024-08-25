@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './OrderTableList.less';
 import { Flex } from 'antd';
 import OrderTable from '../OrderTable/OrderTable';
+import { useRecoilState } from 'recoil';
+import { selectedTableState } from '~/states/pos.state';
 
 function OrderTableList({ tables, openMenu }) {
-  // Initialize state with the tables data, including the `selecting` property
-  const [tableData, setTableData] = useState(
-    tables.map(table => ({ ...table, selecting: table.id === 1 }))
-  );
-
+  const [selectedTable, setSelectedTable] = useRecoilState(selectedTableState);
+  const [tableData, setTableData] = useState([]);
+  useEffect(() => {
+    if (tables && tables.length) {
+      const initializedTables = tables.map(table => ({ ...table, selecting: false }));
+      setTableData(initializedTables);
+    }
+  }, [tables]);
   const handleTableSelected = (id) => {
     const updatedTables = tableData.map(table =>
       ({ ...table, selecting: table.id === id })
@@ -25,6 +30,7 @@ function OrderTableList({ tables, openMenu }) {
           handleTableSelected={handleTableSelected}
           openMenu={openMenu}
           selecting={table.selecting}
+          setSelectedTable={setSelectedTable}
         />
       ))}
     </Flex>

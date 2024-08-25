@@ -1,36 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './SectionPOSOption.less';
-import { Tabs, Button, Input, Flex } from 'antd';
-import { AppleFilled, CompressOutlined, SearchOutlined } from '@ant-design/icons';
+import { Tabs, Button, Flex } from 'antd';
+import { AppleFilled, CompressOutlined } from '@ant-design/icons';
 import OrderTableList from '~/components/POS/OrderTableList';
 import MenuList from '~/components/POS/MenuList';
 
 function SectionPOSOption({ dishes, tables }) {
   const [activeKey, setActiveKey] = useState('1');
-  const [searchTerm, setSearchTerm] = useState('');
-  const renderTablesAvailable = tables => {
-    const totalTables = tables.length;
-    const activeTables = tables.filter(table => table.status === true).length;
-    return `BÀN [${activeTables}/${totalTables}]`;
-  }
+
+
   const handleTabChange = (key) => {
     setActiveKey(key);
   };
 
   const openMenuTab = () => {
     setActiveKey('2');
-  };
-
-  // Lọc danh sách món ăn theo từ khóa tìm kiếm
-  const filteredDishes = dishes.filter(dish =>
-    dish.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  }
 
   return (
     <>
       <Flex gap={10} className="custom-tab-buttons">
         <Button onClick={() => handleTabChange('1')} className='btn'>
-          <div><CompressOutlined /> {renderTablesAvailable(tables)}</div>
+          <div><CompressOutlined /> BÀN [0/XX]</div>
           <b>A1</b>
         </Button>
         <Button onClick={() => handleTabChange('2')} className='btn'>
@@ -49,17 +40,7 @@ function SectionPOSOption({ dishes, tables }) {
           {
             key: '2',
             label: 'Tab 2',
-            children: (
-              <div style={{ paddingTop: 20 }}>
-                <Input
-                  placeholder="Tìm món ăn"
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  style={{ marginBottom: 16, width: 250 }}
-                  prefix={<SearchOutlined />}
-                />
-                <MenuList dishes={filteredDishes} />
-              </div>
-            ),
+            children: <MenuList dishes={dishes} />,
           }
         ]}
         onChange={handleTabChange}

@@ -16,3 +16,18 @@ export const getAllTables = async () => {
   }
   return [];
 }
+
+export const getOrderByTable = async (id) => {
+  try {
+    const order = await api({
+      url: `${API.GET_ALL_ORDER_BY_TABLE}/${id}`,
+      method: GET_METHOD,
+    })
+    dkLogger('success', 'GET ORDER BY TABLE', null, order);
+    return order;
+  }
+  catch (error) {
+    dkLogger('error', 'GET ORDER BY TABLE', null, error);
+  }
+  return {};
+}

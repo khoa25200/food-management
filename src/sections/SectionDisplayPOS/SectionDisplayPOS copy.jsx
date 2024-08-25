@@ -2,7 +2,7 @@ import React, { useEffect, useState, memo } from 'react';
 import './SectionDisplayPOS.less';
 import { Col, Layout, Row, Spin, Tag } from 'antd';
 import FoodDisplayItem from '~/components/POS/FoodDisplayItem';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { orderTableLoading, selectedTableState } from '~/states/pos.state';
 
 // Memoize the FoodDisplayItem to prevent unnecessary re-renders
@@ -14,6 +14,7 @@ function SectionDisplayPOS() {
   const [dishes, setDishes] = useState([]);
 
   useEffect(() => {
+    // Update dishes when selectedTable changes
     if (selectedTable?.data?.orderDetailRequests) {
       setDishes(selectedTable.data.orderDetailRequests);
     } else {
@@ -24,60 +25,23 @@ function SectionDisplayPOS() {
   const isDisableRemove = !!selectedTable?.id;
 
   const handleQuantityChange = (dishId, newQuantity) => {
-    setDishes(prevDishes => {
-      const updatedDishes = prevDishes.map(dish =>
-        dish.dishId === dishId ? { ...dish, quantity: newQuantity } : dish
-      );
-
-      // Update the selectedTable state accordingly
-      setSelectedTable(prevTable => ({
-        ...prevTable,
-        data: {
-          ...prevTable.data,
-          orderDetailRequests: updatedDishes
-        }
-      }));
-
-      return updatedDishes; // Return the updated dishes array
-    });
+    const updatedDishes = dishes.map(dish =>
+      dish.dishId === dishId ? { ...dish, quantity: newQuantity } : dish
+    );
+    setDishes(updatedDishes);
+    
+    // Update the selectedTableState with new dishes list
+    setSelectedTable(prevState => ({
+      ...prevState,
+      data: {
+        ...prevState.data,
+        orderDetailRequests: updatedDishes,
+        totalPrice: updatedDishes.reduce((total, dish) => total + dish.pricePerItem * dish.quantity, 0)
+      }
+    }));
   };
 
-  const handleDeleteDish = (dishId) => {
-    setDishes(prevDishes => {
-      const updatedDishes = prevDishes.filter(dish => dish.dishId !== dishId);
-
-      // Update the selectedTable state accordingly
-      setSelectedTable(prevTable => ({
-        ...prevTable,
-        data: {
-          ...prevTable.data,
-          orderDetailRequests: updatedDishes
-        }
-      }));
-
-      return updatedDishes; // Return the updated dishes array
-    });
-  };
-
-  const handleResetDish = (dishId) => {
-    setDishes(prevDishes => {
-      const updatedDishes = prevDishes.map(dish =>
-        dish.dishId === dishId ? { ...dish, quantity: dish.defaultQuantity, note: dish.defaultNote } : dish
-      );
-
-      // Update the selectedTable state accordingly
-      setSelectedTable(prevTable => ({
-        ...prevTable,
-        data: {
-          ...prevTable.data,
-          orderDetailRequests: updatedDishes
-        }
-      }));
-
-      return updatedDishes; // Return the updated dishes array
-    });
-  };
-
+  // Function to render dishes or a message if none are available
   const renderDishes = () => {
     if (dishes.length > 0) {
       return dishes.map((dish, index) => (
@@ -87,9 +51,6 @@ function SectionDisplayPOS() {
             dish={dish}
             isDisableRemove={isDisableRemove}
             handleQuantityChange={handleQuantityChange}
-            handleDeleteDish={handleDeleteDish}
-            handleResetDish={handleResetDish}
-            isDeleteApi={selectedTable?.dishesOfTable?.some(id => id === dish.dishId)}
           />
         </React.Fragment>
       ));
@@ -102,8 +63,8 @@ function SectionDisplayPOS() {
   };
 
   return (
-    <Layout className='display-pos-section'>
-      <Row className='header-display-section'>
+    <Layout prefixCls='display-pos-section'>
+      <Row prefixCls='header-display-section'>
         <Col span={1}>#</Col>
         <Col span={13}>TÊN HÀNG HÓA</Col>
         <Col span={4} style={{ textAlign: 'center' }}>SL</Col>
