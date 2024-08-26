@@ -24,8 +24,8 @@ const SectionMainAction = () => {
   const prepareRequestBody = () => {
     const { data, id } = selectedTable;
     return {
-      orderId: data.orderId || 1,
-      totalPrice: data.totalPrice || calculateTotalAmount() || 999999,
+      orderId: data.orderId || 0,
+      totalPrice: data.totalPrice || calculateTotalAmount() || 0,
       tableId: id,
       userId: data.userId || 2,
       orderDetailRequests: data.orderDetailRequests.map(item => ({
@@ -59,11 +59,11 @@ const SectionMainAction = () => {
 
   const handleTempCalculator = async (req) => {
     await tempCalculator(req);
-    reloadPage();
+    // reloadPage();
   }
   const handlePayment = async (req) => {
     await paymentOrder(req);
-    reloadPage();
+    // reloadPage();
   }
 
   const handlePrintCookingOrder = () => {
