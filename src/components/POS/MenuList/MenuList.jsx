@@ -45,7 +45,7 @@ function MenuList({ dishes, openMenu }) {
     }));
   }
   return (
-    <Flex className="container" gap={5}>
+    <Flex className="container-menu-list" gap={5}>
       {dishes.map((dish, index) => (
         <MenuItem key={index} dish={dish} handleAddDish={handleAddDish} className="item" />
       ))}
