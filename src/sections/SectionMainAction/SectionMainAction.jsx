@@ -59,11 +59,11 @@ const SectionMainAction = () => {
 
   const handleTempCalculator = async (req) => {
     await tempCalculator(req);
-    // reloadPage();
+    reloadPage();
   }
   const handlePayment = async (req) => {
     await paymentOrder(req);
-    // reloadPage();
+    reloadPage();
   }
 
   const handlePrintCookingOrder = () => {

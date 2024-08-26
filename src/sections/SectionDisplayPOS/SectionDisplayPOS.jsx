@@ -104,7 +104,7 @@ function SectionDisplayPOS() {
         key={index}
         index={index}
         dish={dish}
-        isDeleteApi={isDisableRemove}
+        isDeleteApi={(selectedTable?.dishesOfTable?.some(val=>val==dish.dishId))}
         handleQuantityChange={handleQuantityChange}
         handleNoteChange={handleNoteChange}
         handleDeleteDish={handleDeleteDish}
