@@ -29,7 +29,7 @@ const FormBooking = ({ role }) => {
       phoneNumber: values.phoneNumber,
       seat: values.seat,
       status: 0,
-      userId: 0
+      userId: 2
     };
 
     handleUserBooking(payload);
