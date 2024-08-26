@@ -153,7 +153,7 @@ function TableEditable({
         Thêm mới
       </Button>
       <Form form={form} component={false} className="edit-table">
-        <Table
+        <Table className="edit-table-table"
           components={{ body: { cell: TableEditableCell } }}
           bordered
           dataSource={tableData.data}

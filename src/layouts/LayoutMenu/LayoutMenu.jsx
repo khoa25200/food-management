@@ -12,7 +12,6 @@ import { ROUTE } from '~/configs/consts/route.const';
 import { ROLE } from '~/configs/consts/role.const';
 
 
-
 function LayoutMenu({ role }) {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
@@ -29,8 +28,8 @@ function LayoutMenu({ role }) {
   }, []);
 
   const handleClickItem = () => {
-    if(role===ROLE.USER){
-      
+    if (role === ROLE.USER) {
+      navigate(`/${ROUTE.USER_BOOKING}`)
     }
     navigate(`/${role}/${ROUTE.POS}`)
   }

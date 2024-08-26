@@ -10,6 +10,7 @@ export const API = {
   GET_ALL_ORDER_BY_TABLE: `${DEFAULT_BASE_URL}/order/by-table`,
   GET_ALL_TABLES: `${DEFAULT_BASE_URL}/table`,
   GET_INVOICES_BY_RANGE: `${DEFAULT_BASE_URL}/invoices/by-date-range`,
+  SEARCH_DISHES: `${DEFAULT_BASE_URL}/dishes/search`,
 
 
 
@@ -17,6 +18,7 @@ export const API = {
   CREATE_IMG_URL: `${DEFAULT_BASE_URL}/image`,
   CREATE_DISH: `${DEFAULT_BASE_URL}/dishes`,
   TEMP_ORDER: `${DEFAULT_BASE_URL}/order`,
+  CREATE_BOOKING: `${DEFAULT_BASE_URL}/booking`,
 
 
   UPDATE_DISH: `${DEFAULT_BASE_URL}/dishes`,

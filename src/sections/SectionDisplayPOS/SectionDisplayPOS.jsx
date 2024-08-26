@@ -116,9 +116,18 @@ function SectionDisplayPOS() {
   return (
     <Layout className='section-display-pos'>
       <Row>
+        <Tag color='blue'>{selectedTable?.id ? `Bàn ${selectedTable?.id}` : 'Chọn bàn'}</Tag>
+
         <Col span={24}>
           <div className='section-display-pos-header'>
-            <Tag color='blue'>{selectedTable?.id ? `Bàn ${selectedTable?.id}` : 'Chọn bàn'}</Tag>
+            <Row className='header-display-section'>
+              <Col span={1}>#</Col>
+              <Col span={13}>TÊN MÓN</Col>
+              <Col span={4}></Col>
+              <Col span={2} style={{ textAlign: 'center' }}>ĐVT</Col>
+              <Col span={2} style={{ textAlign: 'center' }}>ĐƠN GIÁ</Col>
+              <Col span={2}></Col>
+            </Row>
           </div>
           <div className='section-display-pos-content'>
             {renderDishes()}
