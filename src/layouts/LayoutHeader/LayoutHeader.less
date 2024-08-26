@@ -1,24 +1,88 @@
 .header {
   background-color: @primary-color;
-  position: fixed;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  position: fixed; /* Fix the header at the top */
+  top: 0;
   left: 0;
-  right: 0;
-  height: 64px;
-  z-index: 1000;
-  padding: auto;
+  z-index: 9999; /* Ensure the header is on top of all other content */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
 
-  .container {
-    max-width: 1360px;
-    width: 100%;
-    margin: auto;
-    padding: 0 16px;
-    .management {
-    }
-    h1 {
-      color: aliceblue;
-      line-height: 64px;
-      margin: 0;
-    }
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.title {
+  color: #ffffff;
+  font-size: 24px;
+  cursor: pointer;
+  margin: 0;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.search-bar {
+  width: 280px;
+  margin-right: 16px;
+}
+
+.management-btn {
+  background-color: lighten(@primary-color, 10%);
+  border-color: lighten(@primary-color, 10%);
+  color: white;
+
+  &:hover {
+    background-color: lighten(@primary-color, 20%);
+    border-color: lighten(@primary-color, 20%);
+  }
+}
+
+.food-list {
+  width: 100%;
+}
+
+.food-item-card {
+  .ant-card-body {
+    padding: 16px;
   }
 
+  .food-image {
+    height: 150px;
+    object-fit: cover;
+  }
+
+  .food-description {
+    margin-top: 8px;
+    color: #666;
+    font-size: 14px;
+  }
+
+  .food-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+  }
+
+  .food-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: @primary-color;
+  }
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
 }

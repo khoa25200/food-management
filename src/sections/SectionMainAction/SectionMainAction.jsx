@@ -6,27 +6,10 @@ import { useRecoilState } from 'recoil';
 import { selectedTableState } from '~/states/pos.state';
 import { convertVNDCurrency } from '~/utils/Helper';
 import { paymentOrder, tempCalculator } from '~/services/pos.service';
+import { reloadPage } from '~/utils/reload';
 
 const SectionMainAction = () => {
   const [selectedTable] = useRecoilState(selectedTableState);
-
-  // Prepare the body data for API requests
-  const prepareRequestBody = () => {
-    const { data, id } = selectedTable;
-    return {
-      orderId: data.orderId,
-      totalPrice: data.totalPrice,
-      tableId: id,
-      userId: data.userId,
-      orderDetailRequests: data.orderDetailRequests.map(item => ({
-        id: item.id,
-        dishId: item.dishId,
-        quantity: item.quantity,
-        pricePerItem: item.pricePerItem,
-        note: item.note,
-      })),
-    };
-  };
 
   // Calculate total price from orderDetailRequests
   const calculateTotalAmount = () => {
@@ -36,6 +19,27 @@ const SectionMainAction = () => {
       0
     );
   };
+
+  // Prepare the body data for API requests
+  const prepareRequestBody = () => {
+    const { data, id } = selectedTable;
+    return {
+      orderId: data.orderId || 1,
+      totalPrice: data.totalPrice || calculateTotalAmount() || 999999,
+      tableId: id,
+      userId: data.userId || 2,
+      orderDetailRequests: data.orderDetailRequests.map(item => ({
+        id: item.id,
+        dishId: item.dishId,
+        dishName: item.dishName,
+        quantity: item.quantity,
+        image: item.image,
+        pricePerItem: item.pricePerItem,
+        note: item.note,
+      })),
+    };
+  };
+
 
   // Extracting details from selectedTable
   const { data } = selectedTable;
@@ -55,9 +59,11 @@ const SectionMainAction = () => {
 
   const handleTempCalculator = async (req) => {
     await tempCalculator(req);
+    reloadPage();
   }
   const handlePayment = async (req) => {
     await paymentOrder(req);
+    reloadPage();
   }
 
   const handlePrintCookingOrder = () => {
@@ -69,6 +75,7 @@ const SectionMainAction = () => {
     message.info('Tạm tính đã hoàn tất');
     console.log('Temporary checkout:', requestBody);
     handleTempCalculator(requestBody);
+    // reloadPage();
   };
 
   const handleCheckout = async () => {

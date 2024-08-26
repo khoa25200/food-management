@@ -25,6 +25,24 @@ export const getAllDishes = async (page, size, sortBy = 'id', sortDirection = 'a
   return
 }
 
+export const searchDish = async (keyword) => {
+  try {
+    const dishes = await api({
+      url: `${API.SEARCH_DISHES}`,
+      params: {
+        keyword,
+      },
+      method: GET_METHOD,
+    })
+    // dkLogger('success', 'GET ALL DISHES', null, dishes);
+    return dishes;
+  }
+  catch (error) {
+    // dkLogger('error', 'GET ALL DISHES', null, error);
+  }
+  return
+}
+
 export const updateDish = async (id, data) => {
   try {
     const dishes = await api({

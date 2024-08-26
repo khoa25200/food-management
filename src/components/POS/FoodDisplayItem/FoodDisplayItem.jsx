@@ -4,6 +4,7 @@ import { Button, Col, Input, message, notification, Popconfirm, Row } from 'antd
 import { DeleteFilled, EditOutlined, MinusCircleFilled, NotificationFilled, PlusCircleFilled, UserOutlined } from '@ant-design/icons';
 import { convertVNDCurrency } from '~/utils/Helper';
 import { deleteOrderDetail } from '~/services/pos.service';
+import { reloadPage } from '~/utils/reload';
 
 function FoodDisplayItem({ index, dish, isDeleteApi, handleQuantityChange, handleNoteChange, handleDeleteDish, handleResetDish }) {
   const [dishQuantity, setDishQuantity] = useState(dish?.quantity || 1);
