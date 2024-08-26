@@ -11,12 +11,14 @@ import ManagementUserPage from '~/pages/management-user-page';
 import ManagementFoodPage from '~/pages/management-food-page';
 import ManagementTablePage from '~/pages/management-table-page';
 import POSPage from '~/pages/pos-page';
+import UserBookingPage from '~/pages/user-booking-page';
 
 const adminRoutes = [
   { path: `/${ROUTE.LOGIN}`, element: <LoginPage role={ROLE.ADMIN} /> },
   { path: `/${ROUTE.REGISTER}`, element: <RegisterPage role={ROLE.ADMIN} /> },
   { path: `/${ROUTE.FORGOT_PASSWORD}`, element: <ForgotPasswordPage role={ROLE.ADMIN} /> },
-  { path: `/${ROUTE.MENU}`, element: <MenuPage role={ROLE.ADMIN} /> },
+  { path: `/${ROUTE.MENU}`, element: <UserBookingPage role={ROLE.ADMIN} /> },
+  { path: `/${ROUTE.USER_BOOKING}`, element: <MenuPage role={ROLE.ADMIN} /> },
   { path: `/${ROUTE.USER_MANAGEMENT}`, element: <ManagementUserPage role={ROLE.ADMIN} /> },
   { path: `/${ROUTE.FOOD_MANAGEMENT}`, element: <ManagementFoodPage role={ROLE.ADMIN} /> },
   { path: `/${ROUTE.TABLE_MANAGEMENT}`, element: <ManagementTablePage role={ROLE.ADMIN} /> },

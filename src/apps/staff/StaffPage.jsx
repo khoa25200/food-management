@@ -6,11 +6,13 @@ import LoginPage from 'pages/login-page';
 import RegisterPage from 'pages/register-page';
 import MenuPage from 'pages/menu-page';
 import POSPage from '~/pages/pos-page';
+import UserBookingPage from '~/pages/user-booking-page';
 
 const staffRoutes = [
   { path: `/${ROUTE.LOGIN}`, element: <LoginPage role={ROLE.STAFF} /> },
   { path: `/${ROUTE.REGISTER}`, element: <RegisterPage role={ROLE.STAFF} /> },
   { path: `/${ROUTE.MENU}`, element: <MenuPage role={ROLE.STAFF} /> },
+  { path: `/${ROUTE.USER_BOOKING}`, element: <UserBookingPage role={ROLE.STAFF} /> },
   { path: `/${ROUTE.POS}`, element: <POSPage role={ROLE.STAFF} /> },
 
   /*Use case: Error route to redirect to login*/
